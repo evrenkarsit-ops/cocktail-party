@@ -74,6 +74,10 @@
     {
       "text": "Stage 1: Planning started",
       "type": "warning"
+    },
+    {
+      "text": "Atlas: Requirements analyzed ✓",
+      "type": "success"
     }
   ],
   "stats": {
