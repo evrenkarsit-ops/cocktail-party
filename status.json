@@ -16,10 +16,10 @@
       "task": null
     },
     "sage": {
-      "status": "active",
-      "location": "table3",
-      "tokens": 0,
-      "task": "Code review..."
+      "status": "idle",
+      "location": "lounge",
+      "tokens": 15000,
+      "task": null
     },
     "phoenix": {
       "status": "idle",
