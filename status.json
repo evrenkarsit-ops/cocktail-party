@@ -110,6 +110,10 @@
     {
       "text": "Stage 3: Quality Guard started",
       "type": "warning"
+    },
+    {
+      "text": "Sage: Code quality verified ✓",
+      "type": "success"
     }
   ],
   "stats": {
