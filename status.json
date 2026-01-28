@@ -1,0 +1,18 @@
+{
+  "project": null,
+  "status": "idle",
+  "startTime": null,
+  "agents": {
+    "atlas": {"status": "idle", "location": "bar", "tokens": 0, "task": null},
+    "nova": {"status": "idle", "location": "bar", "tokens": 0, "task": null},
+    "sage": {"status": "idle", "location": "bar", "tokens": 0, "task": null},
+    "phoenix": {"status": "idle", "location": "bar", "tokens": 0, "task": null},
+    "shadow": {"status": "idle", "location": "bar", "tokens": 0, "task": null},
+    "echo": {"status": "idle", "location": "bar", "tokens": 0, "task": null},
+    "bolt": {"status": "idle", "location": "bar", "tokens": 0, "task": null},
+    "scribe": {"status": "idle", "location": "bar", "tokens": 0, "task": null}
+  },
+  "logs": [],
+  "console": [],
+  "stats": {"totalTokens": 0, "totalCost": 0, "tasksComplete": 0, "totalTasks": 8}
+}

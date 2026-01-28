@@ -947,10 +947,97 @@
             document.getElementById('agentInfo').innerHTML = html;
         });
         
+        // Live status polling
+        const STATUS_URL = 'https://raw.githubusercontent.com/evrenkarsit-ops/cocktail-party/master/status.json';
+        let lastLogCount = 0;
+        let lastConsoleCount = 0;
+        
+        async function pollStatus() {
+            try {
+                const response = await fetch(STATUS_URL + '?t=' + Date.now());
+                if (!response.ok) return;
+                
+                const data = await response.json();
+                
+                // Update project name
+                if (data.project) {
+                    document.getElementById('projectName').textContent = data.project;
+                }
+                
+                // Update status badge
+                if (data.status) {
+                    setStatus(data.status);
+                }
+                
+                // Update start time
+                if (data.startTime && !startTime) {
+                    startTime = new Date(data.startTime).getTime();
+                }
+                
+                // Update agents
+                if (data.agents) {
+                    Object.entries(data.agents).forEach(([id, state]) => {
+                        if (agentStates[id]) {
+                            const oldLocation = agentStates[id].location;
+                            const oldStatus = agentStates[id].status;
+                            
+                            agentStates[id].status = state.status;
+                            agentStates[id].tokens = state.tokens || 0;
+                            agentStates[id].currentTask = state.task;
+                            agentStates[id].location = state.location;
+                            
+                            // Move agent if location changed
+                            if (state.location && state.location !== oldLocation) {
+                                const slotIndex = Object.keys(data.agents).filter(
+                                    k => data.agents[k].location === state.location
+                                ).indexOf(id);
+                                moveAgent(id, state.location, slotIndex);
+                            }
+                            
+                            // Set active state
+                            setAgentActive(id, state.status === 'active', state.task);
+                        }
+                    });
+                }
+                
+                // Update stats
+                if (data.stats) {
+                    document.getElementById('totalTokens').textContent = 
+                        ((data.stats.totalTokens || 0) / 1000).toFixed(0) + 'K';
+                    document.getElementById('totalCost').textContent = 
+                        '$' + (data.stats.totalCost || 0).toFixed(2);
+                    document.getElementById('tasksComplete').textContent = 
+                        (data.stats.tasksComplete || 0) + '/' + (data.stats.totalTasks || 8);
+                }
+                
+                // Add new logs
+                if (data.logs && data.logs.length > lastLogCount) {
+                    const newLogs = data.logs.slice(lastLogCount);
+                    newLogs.forEach(log => addLog(log.message, log.agent));
+                    lastLogCount = data.logs.length;
+                }
+                
+                // Add new console messages
+                if (data.console && data.console.length > lastConsoleCount) {
+                    const newConsole = data.console.slice(lastConsoleCount);
+                    newConsole.forEach(msg => addConsole(msg.text, msg.type || ''));
+                    lastConsoleCount = data.console.length;
+                }
+                
+            } catch (e) {
+                // Silent fail - will retry
+            }
+        }
+        
+        // Poll every 2 seconds
+        setInterval(pollStatus, 2000);
+        
         // Initialize
         initAgents();
         addLog('System initialized');
         addLog('8 agents ready at the bar');
+        addConsole('Polling live status from GitHub...', 'success');
+        pollStatus(); // Initial poll
     </script>
 </body>
 </html>
