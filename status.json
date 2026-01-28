@@ -28,10 +28,10 @@
       "task": null
     },
     "shadow": {
-      "status": "active",
-      "location": "table3",
-      "tokens": 0,
-      "task": "Security audit in progress..."
+      "status": "idle",
+      "location": "bar",
+      "tokens": 18000,
+      "task": null
     },
     "echo": {
       "status": "idle",
