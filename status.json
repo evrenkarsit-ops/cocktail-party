@@ -64,6 +64,10 @@
     {
       "agent": "Atlas",
       "message": "completed planning, moving to lounge"
+    },
+    {
+      "agent": "Nova",
+      "message": "moved to Table 2 (BUILD)"
     }
   ],
   "console": [
