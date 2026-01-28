@@ -88,6 +88,10 @@
     {
       "agent": "Bolt",
       "message": "moved to Table 4 (VERIFY)"
+    },
+    {
+      "agent": "Scribe",
+      "message": "moved to Table 4 (VERIFY)"
     }
   ],
   "console": [
