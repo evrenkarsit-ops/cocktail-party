@@ -40,10 +40,10 @@
       "task": "Generating test cases..."
     },
     "bolt": {
-      "status": "idle",
-      "location": "entrance",
+      "status": "active",
+      "location": "table4",
       "tokens": 0,
-      "task": null
+      "task": "Preparing test runner..."
     },
     "scribe": {
       "status": "idle",
