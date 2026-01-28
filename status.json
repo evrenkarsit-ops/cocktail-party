@@ -22,10 +22,10 @@
       "task": null
     },
     "phoenix": {
-      "status": "idle",
-      "location": "entrance",
+      "status": "active",
+      "location": "table2",
       "tokens": 0,
-      "task": null
+      "task": "Standing by for refactoring..."
     },
     "shadow": {
       "status": "idle",
