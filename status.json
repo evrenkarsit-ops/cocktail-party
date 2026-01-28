@@ -90,6 +90,10 @@
     {
       "text": "✓ Quality gates passed!",
       "type": "success"
+    },
+    {
+      "text": "🟣 Final verification at VERIFY table",
+      "type": "warning"
     }
   ],
   "stats": {
