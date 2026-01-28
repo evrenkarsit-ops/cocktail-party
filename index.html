@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍸 The Cocktail Party - Agent Pipeline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0e17 0%, #1a1f2e 100%);
+            color: #e0e6ed;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #4ecdc4;
+            font-size: 2.5rem;
+            text-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+            letter-spacing: 4px;
+        }
+        
+        .project-name {
+            color: #888;
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+        
+        .main-content {
+            display: flex;
+            gap: 20px;
+        }
+        
+        /* Arena */
+        .arena-container {
+            flex: 1;
+            background: rgba(20, 30, 48, 0.8);
+            border: 2px solid #2a3f5f;
+            border-radius: 10px;
+            padding: 15px;
+        }
+        
+        .arena {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(180deg, #0d1220 0%, #151d2e 100%);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        /* Tables */
+        .table {
+            position: absolute;
+            width: 120px;
+            height: 60px;
+            background: linear-gradient(180deg, #3d4f6f 0%, #2a3a52 100%);
+            border: 2px solid #4a6085;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        
+        .table-name {
+            font-size: 0.9rem;
+            color: #fff;
+        }
+        
+        .table-stage {
+            font-size: 0.7rem;
+            color: #4ecdc4;
+            margin-top: 2px;
+        }
+        
+        .table-1 { top: 40px; left: 80px; }
+        .table-2 { top: 40px; left: 250px; }
+        .table-3 { top: 40px; left: 420px; }
+        .table-4 { top: 40px; left: 590px; }
+        
+        /* Special Areas */
+        .bar {
+            position: absolute;
+            left: 0;
+            top: 150px;
+            width: 50px;
+            height: 200px;
+            background: linear-gradient(180deg, #5d4e37 0%, #3d3428 100%);
+            border: 2px solid #7d6e57;
+            border-radius: 0 8px 8px 0;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #c9b896;
+        }
+        
+        .lounge {
+            position: absolute;
+            right: 20px;
+            top: 180px;
+            width: 140px;
+            height: 100px;
+            background: rgba(78, 205, 196, 0.1);
+            border: 2px dashed #4ecdc4;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4ecdc4;
+        }
+        
+        .entrance {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 20px;
+            background: rgba(255, 107, 107, 0.2);
+            border: 2px solid #ff6b6b;
+            border-radius: 5px;
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        /* Agents */
+        .agent {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        
+        .agent:hover {
+            transform: scale(1.2);
+            z-index: 100;
+        }
+        
+        .agent.selected {
+            box-shadow: 0 0 30px #4ecdc4, 0 0 60px #4ecdc4;
+        }
+        
+        .agent.active {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+            50% { box-shadow: 0 0 30px currentColor, 0 0 50px currentColor; }
+        }
+        
+        .agent-name {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 0.75rem;
+            color: #fff;
+            background: rgba(0,0,0,0.7);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        
+        /* Agent Colors */
+        .agent-atlas { background: linear-gradient(135deg, #3498db, #2980b9); color: #fff; }
+        .agent-nova { background: linear-gradient(135deg, #2ecc71, #27ae60); color: #fff; }
+        .agent-sage { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #333; }
+        .agent-phoenix { background: linear-gradient(135deg, #e67e22, #d35400); color: #fff; }
+        .agent-shadow { background: linear-gradient(135deg, #e74c3c, #c0392b); color: #fff; }
+        .agent-echo { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: #fff; }
+        .agent-bolt { background: linear-gradient(135deg, #1abc9c, #16a085); color: #fff; }
+        .agent-scribe { background: linear-gradient(135deg, #34495e, #2c3e50); color: #fff; }
+        
+        /* Info Panel */
+        .info-panel {
+            width: 320px;
+            background: rgba(20, 30, 48, 0.9);
+            border: 2px solid #2a3f5f;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .info-section {
+            margin-bottom: 20px;
+        }
+        
+        .info-title {
+            color: #4ecdc4;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #2a3f5f;
+            padding-bottom: 5px;
+        }
+        
+        .agent-display-name {
+            font-size: 1.3rem;
+            color: #4ecdc4;
+            margin-bottom: 5px;
+        }
+        
+        .agent-personality {
+            color: #888;
+            font-size: 0.85rem;
+        }
+        
+        .agent-role {
+            color: #ff6b6b;
+            font-size: 0.75rem;
+            margin-top: 3px;
+        }
+        
+        /* Stats */
+        .stat {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .stat-name {
+            width: 80px;
+            font-size: 0.8rem;
+        }
+        
+        .stat-bar {
+            flex: 1;
+            height: 12px;
+            background: #1a2332;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+        
+        .stat-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+        
+        .stat-value {
+            width: 25px;
+            text-align: right;
+            font-size: 0.8rem;
+        }
+        
+        .stat-speed .stat-fill { background: linear-gradient(90deg, #3498db, #5dade2); }
+        .stat-creativity .stat-fill { background: linear-gradient(90deg, #e74c3c, #ec7063); }
+        .stat-precision .stat-fill { background: linear-gradient(90deg, #f1c40f, #f4d03f); }
+        .stat-intel .stat-fill { background: linear-gradient(90deg, #2ecc71, #58d68d); }
+        
+        /* Goal */
+        .goal-box {
+            background: rgba(78, 205, 196, 0.15);
+            border-left: 3px solid #4ecdc4;
+            padding: 10px;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+        
+        /* Action Log */
+        .action-log {
+            max-height: 150px;
+            overflow-y: auto;
+            font-size: 0.8rem;
+        }
+        
+        .log-entry {
+            padding: 5px 0;
+            border-bottom: 1px solid #1a2332;
+            color: #888;
+        }
+        
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+        
+        .log-entry .agent-tag {
+            font-weight: bold;
+        }
+        
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background: rgba(78, 205, 196, 0.2);
+            border: 2px solid #4ecdc4;
+            border-radius: 5px;
+            color: #4ecdc4;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background: rgba(78, 205, 196, 0.4);
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.3);
+        }
+        
+        .btn.active {
+            background: #4ecdc4;
+            color: #0a0e17;
+        }
+        
+        /* Pipeline Status */
+        .pipeline-status {
+            background: rgba(20, 30, 48, 0.9);
+            border: 2px solid #2a3f5f;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .status-title {
+            color: #4ecdc4;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+        
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-badge.running {
+            background: rgba(46, 204, 113, 0.3);
+            color: #2ecc71;
+            animation: statusPulse 2s infinite;
+        }
+        
+        .status-badge.paused {
+            background: rgba(241, 196, 15, 0.3);
+            color: #f1c40f;
+        }
+        
+        .status-badge.idle {
+            background: rgba(127, 140, 141, 0.3);
+            color: #95a5a6;
+        }
+        
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        .console {
+            background: #0a0e17;
+            border-radius: 5px;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 0.75rem;
+        }
+        
+        .console-line {
+            padding: 3px 0;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .console-prefix {
+            color: #4ecdc4;
+        }
+        
+        .console-text {
+            color: #ccc;
+        }
+        
+        .console-text.success { color: #2ecc71; }
+        .console-text.warning { color: #f1c40f; }
+        .console-text.error { color: #e74c3c; }
+        
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(20, 30, 48, 0.5);
+            border-radius: 8px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-item-value {
+            font-size: 1.5rem;
+            color: #4ecdc4;
+            font-weight: bold;
+        }
+        
+        .stat-item-label {
+            font-size: 0.7rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>The Cocktail Party</h1>
+            <div class="project-name">Project: <span id="projectName">Waiting for pipeline...</span></div>
+        </header>
+        
+        <div class="main-content">
+            <div class="arena-container">
+                <div class="arena" id="arena">
+                    <!-- Tables -->
+                    <div class="table table-1">
+                        <span class="table-name">Table 1</span>
+                        <span class="table-stage">PLAN</span>
+                    </div>
+                    <div class="table table-2">
+                        <span class="table-name">Table 2</span>
+                        <span class="table-stage">BUILD</span>
+                    </div>
+                    <div class="table table-3">
+                        <span class="table-name">Table 3</span>
+                        <span class="table-stage">GUARD</span>
+                    </div>
+                    <div class="table table-4">
+                        <span class="table-name">Table 4</span>
+                        <span class="table-stage">VERIFY</span>
+                    </div>
+                    
+                    <!-- Special Areas -->
+                    <div class="bar">🍸 BAR</div>
+                    <div class="lounge">🛋️ LOUNGE</div>
+                    <div class="entrance">🚪 ENTRANCE</div>
+                    
+                    <!-- Agents will be added here by JS -->
+                </div>
+                
+                <div class="controls">
+                    <button class="btn" id="btnResume">▶️ RESUME</button>
+                    <button class="btn" id="btnPause">⏸️ PAUSE</button>
+                    <button class="btn" id="btnRestart">🔄 RESTART</button>
+                    <button class="btn" id="btnAllAgents">👥 ALL AGENTS</button>
+                    <button class="btn" id="btnDemo">🎭 DEMO</button>
+                </div>
+                
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="totalTokens">0</div>
+                        <div class="stat-item-label">Tokens</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="totalCost">$0.00</div>
+                        <div class="stat-item-label">Cost</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="elapsed">00:00</div>
+                        <div class="stat-item-label">Elapsed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-value" id="tasksComplete">0/0</div>
+                        <div class="stat-item-label">Tasks</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-panel">
+                <div class="info-section">
+                    <div class="info-title">AGENT INFO</div>
+                    <div id="agentInfo">
+                        <div style="color: #666; font-style: italic;">Click an agent to see details</div>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <div class="info-title">CURRENT GOAL</div>
+                    <div class="goal-box" id="currentGoal">
+                        "Waiting for task..."
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <div class="info-title">ACTION LOG</div>
+                    <div class="action-log" id="actionLog">
+                        <div class="log-entry">• System initialized</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pipeline-status">
+            <div class="status-header">
+                <span class="status-title">PIPELINE CONSOLE</span>
+                <span class="status-badge idle" id="statusBadge">● IDLE</span>
+            </div>
+            <div class="console" id="console">
+                <div class="console-line">
+                    <span class="console-prefix">&gt;</span>
+                    <span class="console-text">Cocktail Party initialized. Waiting for pipeline...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Agent definitions
+        const agents = [
+            { id: 'atlas', name: 'Atlas', title: 'The Architect', role: 'Planner', model: 'Opus', emoji: '🔵', personality: 'Strategic & Calm', stats: { speed: 7, creativity: 8, precision: 9, intel: 10 } },
+            { id: 'nova', name: 'Nova', title: 'The Builder', role: 'Coder', model: 'Opus', emoji: '🟢', personality: 'Fast & Precise', stats: { speed: 9, creativity: 7, precision: 10, intel: 8 } },
+            { id: 'sage', name: 'Sage', title: 'The Critic', role: 'Reviewer', model: 'Sonnet', emoji: '🟡', personality: 'Sharp & Thorough', stats: { speed: 6, creativity: 5, precision: 10, intel: 9 } },
+            { id: 'phoenix', name: 'Phoenix', title: 'The Polisher', role: 'Refactorer', model: 'Opus', emoji: '🟠', personality: 'Perfectionist', stats: { speed: 5, creativity: 8, precision: 10, intel: 8 } },
+            { id: 'shadow', name: 'Shadow', title: 'The Guardian', role: 'Security', model: 'Sonnet', emoji: '🔴', personality: 'Paranoid & Vigilant', stats: { speed: 7, creativity: 6, precision: 9, intel: 10 } },
+            { id: 'echo', name: 'Echo', title: 'The Predictor', role: 'TestGen', model: 'Sonnet', emoji: '🟣', personality: 'Creative Edge-Hunter', stats: { speed: 8, creativity: 10, precision: 7, intel: 8 } },
+            { id: 'bolt', name: 'Bolt', title: 'The Executor', role: 'TestRunner', model: 'Sonnet', emoji: '⚡', personality: 'Lightning Fast', stats: { speed: 10, creativity: 3, precision: 8, intel: 6 } },
+            { id: 'scribe', name: 'Scribe', title: 'The Chronicler', role: 'Docs', model: 'Sonnet', emoji: '📘', personality: 'Meticulous & Clear', stats: { speed: 6, creativity: 7, precision: 10, intel: 8 } }
+        ];
+        
+        // Positions for different areas
+        const positions = {
+            bar: [
+                { x: 70, y: 180 }, { x: 70, y: 220 }, { x: 70, y: 260 }, { x: 70, y: 300 }
+            ],
+            table1: [
+                { x: 120, y: 120 }, { x: 170, y: 120 }
+            ],
+            table2: [
+                { x: 290, y: 120 }, { x: 340, y: 120 }
+            ],
+            table3: [
+                { x: 460, y: 120 }, { x: 510, y: 120 }
+            ],
+            table4: [
+                { x: 620, y: 120 }, { x: 670, y: 120 }, { x: 645, y: 160 }
+            ],
+            lounge: [
+                { x: 640, y: 220 }, { x: 690, y: 220 }, { x: 640, y: 260 }, { x: 690, y: 260 }
+            ],
+            entrance: [
+                { x: 350, y: 420 }, { x: 400, y: 420 }, { x: 375, y: 380 }
+            ]
+        };
+        
+        // Agent states
+        let agentStates = {};
+        let selectedAgent = null;
+        let isPaused = false;
+        let isDemo = false;
+        let startTime = null;
+        
+        // Initialize agents
+        function initAgents() {
+            const arena = document.getElementById('arena');
+            
+            agents.forEach((agent, index) => {
+                const el = document.createElement('div');
+                el.className = `agent agent-${agent.id}`;
+                el.id = `agent-${agent.id}`;
+                el.innerHTML = `
+                    <span class="agent-name">${agent.name}</span>
+                    ${agent.emoji}
+                `;
+                
+                // Start at bar
+                const pos = positions.bar[index % positions.bar.length];
+                el.style.left = pos.x + 'px';
+                el.style.top = pos.y + (Math.floor(index / 4) * 50) + 'px';
+                
+                el.addEventListener('click', () => selectAgent(agent));
+                
+                arena.appendChild(el);
+                
+                agentStates[agent.id] = {
+                    ...agent,
+                    status: 'idle',
+                    location: 'bar',
+                    tokens: 0,
+                    currentTask: null
+                };
+            });
+        }
+        
+        // Select an agent
+        function selectAgent(agent) {
+            // Remove previous selection
+            document.querySelectorAll('.agent').forEach(el => el.classList.remove('selected'));
+            
+            // Add selection
+            const el = document.getElementById(`agent-${agent.id}`);
+            el.classList.add('selected');
+            selectedAgent = agent;
+            
+            // Update info panel
+            const state = agentStates[agent.id];
+            document.getElementById('agentInfo').innerHTML = `
+                <div style="color: #666; font-size: 0.75rem;">Agent #${agents.indexOf(agent) + 1}</div>
+                <div class="agent-display-name">${agent.name} ${agent.title}</div>
+                <div class="agent-personality">Personality: ${agent.personality}</div>
+                <div class="agent-role">${agent.role} (${agent.model})</div>
+                
+                <div style="margin-top: 15px;">
+                    <div class="info-title">STATS</div>
+                    <div class="stat stat-speed">
+                        <span class="stat-name">Speed</span>
+                        <div class="stat-bar"><div class="stat-fill" style="width: ${agent.stats.speed * 10}%"></div></div>
+                        <span class="stat-value">${agent.stats.speed}</span>
+                    </div>
+                    <div class="stat stat-creativity">
+                        <span class="stat-name">Creativity</span>
+                        <div class="stat-bar"><div class="stat-fill" style="width: ${agent.stats.creativity * 10}%"></div></div>
+                        <span class="stat-value">${agent.stats.creativity}</span>
+                    </div>
+                    <div class="stat stat-precision">
+                        <span class="stat-name">Precision</span>
+                        <div class="stat-bar"><div class="stat-fill" style="width: ${agent.stats.precision * 10}%"></div></div>
+                        <span class="stat-value">${agent.stats.precision}</span>
+                    </div>
+                    <div class="stat stat-intel">
+                        <span class="stat-name">Intel</span>
+                        <div class="stat-bar"><div class="stat-fill" style="width: ${agent.stats.intel * 10}%"></div></div>
+                        <span class="stat-value">${agent.stats.intel}</span>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 10px; font-size: 0.8rem;">
+                    <span style="color: #666;">Status:</span> 
+                    <span style="color: ${state.status === 'active' ? '#2ecc71' : state.status === 'waiting' ? '#f1c40f' : '#95a5a6'}">${state.status.toUpperCase()}</span>
+                </div>
+                <div style="font-size: 0.8rem;">
+                    <span style="color: #666;">Tokens:</span> 
+                    <span style="color: #4ecdc4">${state.tokens.toLocaleString()}</span>
+                </div>
+            `;
+            
+            // Update goal
+            document.getElementById('currentGoal').textContent = state.currentTask || '"Waiting for task..."';
+        }
+        
+        // Move agent to location
+        function moveAgent(agentId, location, slotIndex = 0) {
+            const el = document.getElementById(`agent-${agentId}`);
+            const pos = positions[location][slotIndex % positions[location].length];
+            
+            if (pos) {
+                el.style.left = pos.x + 'px';
+                el.style.top = pos.y + 'px';
+                agentStates[agentId].location = location;
+            }
+        }
+        
+        // Set agent active/inactive
+        function setAgentActive(agentId, active, task = null) {
+            const el = document.getElementById(`agent-${agentId}`);
+            if (active) {
+                el.classList.add('active');
+                agentStates[agentId].status = 'active';
+                agentStates[agentId].currentTask = task;
+            } else {
+                el.classList.remove('active');
+                agentStates[agentId].status = 'idle';
+            }
+            
+            // Update panel if selected
+            if (selectedAgent && selectedAgent.id === agentId) {
+                selectAgent(selectedAgent);
+            }
+        }
+        
+        // Add to action log
+        function addLog(message, agentName = null) {
+            const log = document.getElementById('actionLog');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            
+            if (agentName) {
+                entry.innerHTML = `• <span class="agent-tag" style="color: #4ecdc4">${agentName}</span> ${message}`;
+            } else {
+                entry.innerHTML = `• ${message}`;
+            }
+            
+            log.insertBefore(entry, log.firstChild);
+            
+            // Keep only last 20 entries
+            while (log.children.length > 20) {
+                log.removeChild(log.lastChild);
+            }
+        }
+        
+        // Add to console
+        function addConsole(message, type = '') {
+            const console = document.getElementById('console');
+            const line = document.createElement('div');
+            line.className = 'console-line';
+            line.innerHTML = `
+                <span class="console-prefix">&gt;</span>
+                <span class="console-text ${type}">${message}</span>
+            `;
+            console.appendChild(line);
+            console.scrollTop = console.scrollHeight;
+        }
+        
+        // Update status badge
+        function setStatus(status) {
+            const badge = document.getElementById('statusBadge');
+            badge.className = `status-badge ${status}`;
+            badge.textContent = `● ${status.toUpperCase()}`;
+        }
+        
+        // Demo mode - simulate pipeline
+        async function runDemo() {
+            if (isDemo) return;
+            isDemo = true;
+            startTime = Date.now();
+            
+            document.getElementById('projectName').textContent = 'Demo: JWT Auth Service';
+            setStatus('running');
+            addConsole('Starting demo pipeline...', 'success');
+            
+            // Move all agents to entrance first
+            agents.forEach((agent, i) => {
+                setTimeout(() => {
+                    moveAgent(agent.id, 'entrance', i % 3);
+                    addLog('entered the party', agent.name);
+                }, i * 300);
+            });
+            
+            await sleep(2500);
+            
+            // Stage 1: Planning
+            addConsole('Stage 1: Planning', 'warning');
+            moveAgent('atlas', 'table1', 0);
+            setAgentActive('atlas', true, 'Analyzing requirements...');
+            addLog('moved to Table 1 (PLAN)', 'Atlas');
+            
+            await sleep(3000);
+            agentStates['atlas'].tokens += 15000;
+            updateStats();
+            addConsole('Atlas: Requirements analyzed, creating task breakdown', 'success');
+            
+            await sleep(2000);
+            setAgentActive('atlas', false);
+            moveAgent('atlas', 'lounge', 0);
+            addLog('completed planning, moving to lounge', 'Atlas');
+            
+            // Stage 2: Building
+            addConsole('Stage 2: Building', 'warning');
+            moveAgent('nova', 'table2', 0);
+            moveAgent('phoenix', 'table2', 1);
+            setAgentActive('nova', true, 'Implementing JWT service...');
+            addLog('moved to Table 2 (BUILD)', 'Nova');
+            addLog('moved to Table 2 (BUILD)', 'Phoenix');
+            
+            await sleep(4000);
+            agentStates['nova'].tokens += 45000;
+            updateStats();
+            addConsole('Nova: Core implementation complete', 'success');
+            
+            // Phoenix refactoring
+            setAgentActive('phoenix', true, 'Refactoring code structure...');
+            await sleep(2000);
+            agentStates['phoenix'].tokens += 20000;
+            updateStats();
+            addConsole('Phoenix: Code refactored for better patterns', 'success');
+            
+            setAgentActive('nova', false);
+            setAgentActive('phoenix', false);
+            moveAgent('nova', 'lounge', 1);
+            moveAgent('phoenix', 'lounge', 2);
+            
+            // Stage 3: Guard (parallel)
+            addConsole('Stage 3: Quality Guard', 'warning');
+            moveAgent('sage', 'table3', 0);
+            moveAgent('shadow', 'table3', 1);
+            setAgentActive('sage', true, 'Reviewing code quality...');
+            setAgentActive('shadow', true, 'Security audit in progress...');
+            addLog('moved to Table 3 (GUARD)', 'Sage');
+            addLog('moved to Table 3 (GUARD)', 'Shadow');
+            
+            await sleep(3000);
+            agentStates['sage'].tokens += 12000;
+            agentStates['shadow'].tokens += 18000;
+            updateStats();
+            addConsole('Sage: Found 2 issues, requesting fixes', 'warning');
+            addConsole('Shadow: No critical vulnerabilities found', 'success');
+            
+            // Feedback loop - Phoenix comes back
+            addConsole('Feedback loop triggered!', 'warning');
+            moveAgent('phoenix', 'table2', 0);
+            setAgentActive('phoenix', true, 'Fixing review issues...');
+            addLog('returned to fix issues', 'Phoenix');
+            
+            await sleep(2000);
+            agentStates['phoenix'].tokens += 8000;
+            updateStats();
+            addConsole('Phoenix: Issues resolved', 'success');
+            
+            setAgentActive('sage', false);
+            setAgentActive('shadow', false);
+            setAgentActive('phoenix', false);
+            moveAgent('sage', 'lounge', 3);
+            moveAgent('shadow', 'bar', 0);
+            moveAgent('phoenix', 'lounge', 2);
+            
+            // Stage 4: Verify
+            addConsole('Stage 4: Verification', 'warning');
+            moveAgent('echo', 'table4', 0);
+            moveAgent('bolt', 'table4', 1);
+            moveAgent('scribe', 'table4', 2);
+            setAgentActive('echo', true, 'Generating test cases...');
+            addLog('moved to Table 4 (VERIFY)', 'Echo');
+            addLog('moved to Table 4 (VERIFY)', 'Bolt');
+            addLog('moved to Table 4 (VERIFY)', 'Scribe');
+            
+            await sleep(2500);
+            agentStates['echo'].tokens += 15000;
+            updateStats();
+            addConsole('Echo: Generated 342 test cases', 'success');
+            
+            setAgentActive('echo', false);
+            setAgentActive('bolt', true, 'Running tests...');
+            
+            await sleep(3000);
+            agentStates['bolt'].tokens += 8000;
+            updateStats();
+            addConsole('Bolt: All 342 tests passed! ✓', 'success');
+            
+            setAgentActive('bolt', false);
+            setAgentActive('scribe', true, 'Writing documentation...');
+            
+            await sleep(2000);
+            agentStates['scribe'].tokens += 10000;
+            updateStats();
+            addConsole('Scribe: Documentation complete', 'success');
+            
+            setAgentActive('scribe', false);
+            
+            // All to lounge
+            moveAgent('echo', 'lounge', 0);
+            moveAgent('bolt', 'lounge', 1);
+            moveAgent('scribe', 'lounge', 2);
+            
+            // Complete
+            setStatus('idle');
+            addConsole('Pipeline completed successfully! 🎉', 'success');
+            document.getElementById('tasksComplete').textContent = '8/8';
+            
+            isDemo = false;
+        }
+        
+        // Update global stats
+        function updateStats() {
+            let totalTokens = 0;
+            Object.values(agentStates).forEach(s => totalTokens += s.tokens);
+            
+            document.getElementById('totalTokens').textContent = (totalTokens / 1000).toFixed(0) + 'K';
+            document.getElementById('totalCost').textContent = '$' + (totalTokens * 0.00001).toFixed(2);
+            
+            if (startTime) {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const mins = Math.floor(elapsed / 60);
+                const secs = elapsed % 60;
+                document.getElementById('elapsed').textContent = 
+                    `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+        }
+        
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
+        // Update timer
+        setInterval(updateStats, 1000);
+        
+        // Button handlers
+        document.getElementById('btnDemo').addEventListener('click', runDemo);
+        document.getElementById('btnPause').addEventListener('click', () => {
+            isPaused = true;
+            setStatus('paused');
+            addConsole('Pipeline paused');
+        });
+        document.getElementById('btnResume').addEventListener('click', () => {
+            isPaused = false;
+            if (isDemo) setStatus('running');
+            addConsole('Pipeline resumed');
+        });
+        document.getElementById('btnRestart').addEventListener('click', () => {
+            location.reload();
+        });
+        document.getElementById('btnAllAgents').addEventListener('click', () => {
+            // Show all agents summary
+            let html = '<div style="font-size: 0.8rem;">';
+            agents.forEach(a => {
+                const s = agentStates[a.id];
+                html += `<div style="padding: 5px 0; border-bottom: 1px solid #1a2332;">
+                    ${a.emoji} <strong>${a.name}</strong> (${a.role}) - 
+                    <span style="color: ${s.status === 'active' ? '#2ecc71' : '#666'}">${s.status}</span>
+                </div>`;
+            });
+            html += '</div>';
+            document.getElementById('agentInfo').innerHTML = html;
+        });
+        
+        // Initialize
+        initAgents();
+        addLog('System initialized');
+        addLog('8 agents ready at the bar');
+    </script>
+</body>
+</html>
