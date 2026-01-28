@@ -142,6 +142,10 @@
     {
       "text": "Bolt: All tests passed! ✓",
       "type": "success"
+    },
+    {
+      "text": "Scribe: Documentation complete ✓",
+      "type": "success"
     }
   ],
   "stats": {
