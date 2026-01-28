@@ -82,6 +82,10 @@
     {
       "text": "✓ Build complete!",
       "type": "success"
+    },
+    {
+      "text": "🟡 Review & Security at GUARD table",
+      "type": "warning"
     }
   ],
   "stats": {
