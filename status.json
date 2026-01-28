@@ -1,6 +1,6 @@
 {
   "project": "Test Pipeline",
-  "status": "running",
+  "status": "idle",
   "startTime": "2026-01-28T07:07:23Z",
   "agents": {
     "atlas": {
