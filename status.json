@@ -68,6 +68,10 @@
     {
       "agent": "Nova",
       "message": "moved to Table 2 (BUILD)"
+    },
+    {
+      "agent": "Phoenix",
+      "message": "moved to Table 2 (BUILD)"
     }
   ],
   "console": [
