@@ -1,161 +1,18 @@
 {
-  "project": "Test Pipeline",
-  "status": "idle",
-  "startTime": "2026-01-28T07:07:23Z",
+  "project": "🚀 Live Demo Pipeline",
+  "status": "running",
+  "startTime": "2026-01-28T07:08:37Z",
   "agents": {
-    "atlas": {
-      "status": "idle",
-      "location": "lounge",
-      "tokens": 15000,
-      "task": null
-    },
-    "nova": {
-      "status": "idle",
-      "location": "lounge",
-      "tokens": 45000,
-      "task": null
-    },
-    "sage": {
-      "status": "idle",
-      "location": "lounge",
-      "tokens": 12000,
-      "task": null
-    },
-    "phoenix": {
-      "status": "idle",
-      "location": "lounge",
-      "tokens": 20000,
-      "task": null
-    },
-    "shadow": {
-      "status": "idle",
-      "location": "bar",
-      "tokens": 18000,
-      "task": null
-    },
-    "echo": {
-      "status": "idle",
-      "location": "lounge",
-      "tokens": 15000,
-      "task": null
-    },
-    "bolt": {
-      "status": "idle",
-      "location": "lounge",
-      "tokens": 8000,
-      "task": null
-    },
-    "scribe": {
-      "status": "idle",
-      "location": "lounge",
-      "tokens": 10000,
-      "task": null
-    }
+    "atlas": {"status": "idle", "location": "entrance", "tokens": 0, "task": null},
+    "nova": {"status": "idle", "location": "entrance", "tokens": 0, "task": null},
+    "sage": {"status": "idle", "location": "entrance", "tokens": 0, "task": null},
+    "phoenix": {"status": "idle", "location": "entrance", "tokens": 0, "task": null},
+    "shadow": {"status": "idle", "location": "entrance", "tokens": 0, "task": null},
+    "echo": {"status": "idle", "location": "entrance", "tokens": 0, "task": null},
+    "bolt": {"status": "idle", "location": "entrance", "tokens": 0, "task": null},
+    "scribe": {"status": "idle", "location": "entrance", "tokens": 0, "task": null}
   },
-  "logs": [
-    {
-      "agent": null,
-      "message": "Pipeline started for Test Pipeline"
-    },
-    {
-      "agent": "Atlas",
-      "message": "moved to Table 1 (PLAN)"
-    },
-    {
-      "agent": "Atlas",
-      "message": "completed planning, moving to lounge"
-    },
-    {
-      "agent": "Nova",
-      "message": "moved to Table 2 (BUILD)"
-    },
-    {
-      "agent": "Phoenix",
-      "message": "moved to Table 2 (BUILD)"
-    },
-    {
-      "agent": "Sage",
-      "message": "moved to Table 3 (GUARD)"
-    },
-    {
-      "agent": "Shadow",
-      "message": "moved to Table 3 (GUARD)"
-    },
-    {
-      "agent": "Echo",
-      "message": "moved to Table 4 (VERIFY)"
-    },
-    {
-      "agent": "Bolt",
-      "message": "moved to Table 4 (VERIFY)"
-    },
-    {
-      "agent": "Scribe",
-      "message": "moved to Table 4 (VERIFY)"
-    }
-  ],
-  "console": [
-    {
-      "text": "Pipeline initialized: Test Pipeline",
-      "type": "success"
-    },
-    {
-      "text": "Stage 1: Planning started",
-      "type": "warning"
-    },
-    {
-      "text": "Atlas: Requirements analyzed ✓",
-      "type": "success"
-    },
-    {
-      "text": "Stage 2: Building started",
-      "type": "warning"
-    },
-    {
-      "text": "Nova: Core implementation complete ✓",
-      "type": "success"
-    },
-    {
-      "text": "Phoenix: Code polished ✓",
-      "type": "success"
-    },
-    {
-      "text": "Stage 3: Quality Guard started",
-      "type": "warning"
-    },
-    {
-      "text": "Sage: Code quality verified ✓",
-      "type": "success"
-    },
-    {
-      "text": "Shadow: No vulnerabilities found ✓",
-      "type": "success"
-    },
-    {
-      "text": "Stage 4: Verification started",
-      "type": "warning"
-    },
-    {
-      "text": "Echo: 342 test cases generated ✓",
-      "type": "success"
-    },
-    {
-      "text": "Bolt: All tests passed! ✓",
-      "type": "success"
-    },
-    {
-      "text": "Scribe: Documentation complete ✓",
-      "type": "success"
-    },
-    {
-      "text": "🎉 Pipeline completed successfully!",
-      "type": "success"
-    }
-  ],
-  "stats": {
-    "totalTokens": 130000,
-    "totalCost": 1.30,
-    "tasksComplete": 8,
-    "totalTasks": 8
-  }
+  "logs": [{"agent": null, "message": "Pipeline started for 🚀 Live Demo Pipeline"}],
+  "console": [{"text": "Pipeline initialized: 🚀 Live Demo Pipeline", "type": "success"}],
+  "stats": {"totalTokens": 0, "totalCost": 0, "tasksComplete": 0, "totalTasks": 8}
 }
