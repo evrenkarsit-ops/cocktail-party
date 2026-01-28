@@ -89,9 +89,9 @@
     }
   ],
   "stats": {
-    "totalTokens": 55000,
-    "totalCost": 0.55,
-    "tasksComplete": 3,
+    "totalTokens": 85000,
+    "totalCost": 0.85,
+    "tasksComplete": 5,
     "totalTasks": 8
   }
 }
