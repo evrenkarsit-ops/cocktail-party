@@ -60,6 +60,10 @@
     {
       "agent": "Atlas",
       "message": "moved to Table 1 (PLAN)"
+    },
+    {
+      "agent": "Atlas",
+      "message": "completed planning, moving to lounge"
     }
   ],
   "console": [
