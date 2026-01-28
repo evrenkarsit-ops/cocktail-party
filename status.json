@@ -72,6 +72,10 @@
     {
       "agent": "Phoenix",
       "message": "moved to Table 2 (BUILD)"
+    },
+    {
+      "agent": "Sage",
+      "message": "moved to Table 3 (GUARD)"
     }
   ],
   "console": [
