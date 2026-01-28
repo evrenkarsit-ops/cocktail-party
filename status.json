@@ -66,6 +66,10 @@
     {
       "text": "Pipeline initialized: Test Pipeline",
       "type": "success"
+    },
+    {
+      "text": "Stage 1: Planning started",
+      "type": "warning"
     }
   ],
   "stats": {
