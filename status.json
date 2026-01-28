@@ -40,10 +40,10 @@
       "task": null
     },
     "bolt": {
-      "status": "active",
-      "location": "table4",
-      "tokens": 0,
-      "task": "Preparing test runner..."
+      "status": "idle",
+      "location": "lounge",
+      "tokens": 8000,
+      "task": null
     },
     "scribe": {
       "status": "active",
