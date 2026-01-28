@@ -138,6 +138,10 @@
     {
       "text": "Echo: 342 test cases generated ✓",
       "type": "success"
+    },
+    {
+      "text": "Bolt: All tests passed! ✓",
+      "type": "success"
     }
   ],
   "stats": {
