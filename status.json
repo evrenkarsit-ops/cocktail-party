@@ -130,6 +130,10 @@
     {
       "text": "Shadow: No vulnerabilities found ✓",
       "type": "success"
+    },
+    {
+      "text": "Stage 4: Verification started",
+      "type": "warning"
     }
   ],
   "stats": {
