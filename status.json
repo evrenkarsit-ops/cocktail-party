@@ -10,10 +10,10 @@
       "task": null
     },
     "nova": {
-      "status": "idle",
-      "location": "entrance",
+      "status": "active",
+      "location": "table2",
       "tokens": 0,
-      "task": null
+      "task": "Implementing core logic..."
     },
     "sage": {
       "status": "idle",
