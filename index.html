@@ -947,8 +947,8 @@
             document.getElementById('agentInfo').innerHTML = html;
         });
         
-        // Live status polling
-        const STATUS_URL = 'https://raw.githubusercontent.com/evrenkarsit-ops/cocktail-party/master/status.json';
+        // Live status polling - use relative URL for same-origin API
+        const STATUS_URL = '/api/status';
         let lastLogCount = 0;
         let lastConsoleCount = 0;
         
