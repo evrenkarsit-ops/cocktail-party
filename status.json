@@ -90,6 +90,10 @@
     {
       "text": "Stage 2: Building started",
       "type": "warning"
+    },
+    {
+      "text": "Nova: Core implementation complete ✓",
+      "type": "success"
     }
   ],
   "stats": {
