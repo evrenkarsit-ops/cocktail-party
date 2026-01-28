@@ -114,6 +114,10 @@
     {
       "text": "Sage: Code quality verified ✓",
       "type": "success"
+    },
+    {
+      "text": "Shadow: No vulnerabilities found ✓",
+      "type": "success"
     }
   ],
   "stats": {
