@@ -76,6 +76,10 @@
     {
       "agent": "Sage",
       "message": "moved to Table 3 (GUARD)"
+    },
+    {
+      "agent": "Shadow",
+      "message": "moved to Table 3 (GUARD)"
     }
   ],
   "console": [
