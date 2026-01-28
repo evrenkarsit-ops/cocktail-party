@@ -46,10 +46,10 @@
       "task": null
     },
     "scribe": {
-      "status": "active",
-      "location": "table4",
-      "tokens": 0,
-      "task": "Drafting documentation..."
+      "status": "idle",
+      "location": "lounge",
+      "tokens": 10000,
+      "task": null
     }
   },
   "logs": [
