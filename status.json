@@ -34,10 +34,10 @@
       "task": null
     },
     "echo": {
-      "status": "active",
-      "location": "table4",
-      "tokens": 0,
-      "task": "Generating test cases..."
+      "status": "idle",
+      "location": "lounge",
+      "tokens": 15000,
+      "task": null
     },
     "bolt": {
       "status": "active",
