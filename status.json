@@ -78,6 +78,10 @@
     {
       "text": "🟢 Nova + Phoenix at BUILD table",
       "type": "warning"
+    },
+    {
+      "text": "✓ Build complete!",
+      "type": "success"
     }
   ],
   "stats": {
