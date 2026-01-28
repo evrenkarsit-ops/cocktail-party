@@ -146,6 +146,10 @@
     {
       "text": "Scribe: Documentation complete ✓",
       "type": "success"
+    },
+    {
+      "text": "🎉 Pipeline completed successfully!",
+      "type": "success"
     }
   ],
   "stats": {
