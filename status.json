@@ -56,6 +56,10 @@
     {
       "agent": null,
       "message": "Pipeline started for 🚀 Live Demo Pipeline"
+    },
+    {
+      "agent": "Atlas",
+      "message": "moved to Table 1 (PLAN)"
     }
   ],
   "console": [
