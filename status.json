@@ -134,6 +134,10 @@
     {
       "text": "Stage 4: Verification started",
       "type": "warning"
+    },
+    {
+      "text": "Echo: 342 test cases generated ✓",
+      "type": "success"
     }
   ],
   "stats": {
