@@ -80,6 +80,10 @@
     {
       "agent": "Shadow",
       "message": "moved to Table 3 (GUARD)"
+    },
+    {
+      "agent": "Echo",
+      "message": "moved to Table 4 (VERIFY)"
     }
   ],
   "console": [
