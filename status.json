@@ -84,6 +84,10 @@
     {
       "agent": "Echo",
       "message": "moved to Table 4 (VERIFY)"
+    },
+    {
+      "agent": "Bolt",
+      "message": "moved to Table 4 (VERIFY)"
     }
   ],
   "console": [
