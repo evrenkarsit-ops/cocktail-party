@@ -563,28 +563,31 @@
             { id: 'scribe', name: 'Scribe', title: 'The Chronicler', role: 'Docs', model: 'Sonnet', emoji: '📘', personality: 'Meticulous & Clear', stats: { speed: 6, creativity: 7, precision: 10, intel: 8 } }
         ];
         
-        // Positions for different areas
+        // Positions for different areas (8 slots each for all agents)
         const positions = {
             bar: [
-                { x: 70, y: 180 }, { x: 70, y: 220 }, { x: 70, y: 260 }, { x: 70, y: 300 }
+                { x: 70, y: 160 }, { x: 70, y: 200 }, { x: 70, y: 240 }, { x: 70, y: 280 },
+                { x: 70, y: 320 }, { x: 70, y: 360 }, { x: 70, y: 400 }, { x: 70, y: 440 }
             ],
             table1: [
-                { x: 120, y: 120 }, { x: 170, y: 120 }
+                { x: 140, y: 130 }, { x: 190, y: 130 }
             ],
             table2: [
-                { x: 290, y: 120 }, { x: 340, y: 120 }
+                { x: 280, y: 130 }, { x: 330, y: 130 }
             ],
             table3: [
-                { x: 460, y: 120 }, { x: 510, y: 120 }
+                { x: 420, y: 130 }, { x: 470, y: 130 }
             ],
             table4: [
-                { x: 620, y: 120 }, { x: 670, y: 120 }, { x: 645, y: 160 }
+                { x: 560, y: 130 }, { x: 610, y: 130 }, { x: 660, y: 130 }
             ],
             lounge: [
-                { x: 640, y: 220 }, { x: 690, y: 220 }, { x: 640, y: 260 }, { x: 690, y: 260 }
+                { x: 660, y: 200 }, { x: 710, y: 200 }, { x: 760, y: 200 }, { x: 810, y: 200 },
+                { x: 660, y: 250 }, { x: 710, y: 250 }, { x: 760, y: 250 }, { x: 810, y: 250 }
             ],
             entrance: [
-                { x: 350, y: 420 }, { x: 400, y: 420 }, { x: 375, y: 380 }
+                { x: 300, y: 400 }, { x: 350, y: 400 }, { x: 400, y: 400 }, { x: 450, y: 400 },
+                { x: 325, y: 450 }, { x: 375, y: 450 }, { x: 425, y: 450 }, { x: 475, y: 450 }
             ]
         };
         
@@ -975,23 +978,20 @@
                 }
                 
                 // Update agents
+                const agentSlots = { atlas: 0, nova: 1, sage: 2, phoenix: 3, shadow: 4, echo: 5, bolt: 6, scribe: 7 };
                 if (data.agents) {
                     Object.entries(data.agents).forEach(([id, state]) => {
                         if (agentStates[id]) {
                             const oldLocation = agentStates[id].location;
-                            const oldStatus = agentStates[id].status;
                             
                             agentStates[id].status = state.status;
                             agentStates[id].tokens = state.tokens || 0;
                             agentStates[id].currentTask = state.task;
                             agentStates[id].location = state.location;
                             
-                            // Move agent if location changed
-                            if (state.location && state.location !== oldLocation) {
-                                const slotIndex = Object.keys(data.agents).filter(
-                                    k => data.agents[k].location === state.location
-                                ).indexOf(id);
-                                moveAgent(id, state.location, slotIndex);
+                            // Always update position based on current location
+                            if (state.location) {
+                                moveAgent(id, state.location, agentSlots[id] || 0);
                             }
                             
                             // Set active state
@@ -1035,11 +1035,17 @@
         // Initialize
         initAgents();
         addLog('System initialized');
-        addLog('8 agents ready at the bar');
         addConsole('Connecting to live status...', 'success');
-        // Initial poll
+        
+        // Initial poll - this will position agents correctly
         pollStatus();
         console.log('Cocktail Party initialized, polling every 2s');
+        
+        // Force position update after initial load
+        setTimeout(() => {
+            pollStatus();
+            console.log('Positions refreshed');
+        }, 500);
     </script>
 </body>
 </html>
