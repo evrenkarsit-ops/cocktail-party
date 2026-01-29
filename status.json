@@ -90,6 +90,10 @@
     {
       "text": "🟣 Verification at VERIFY",
       "type": "warning"
+    },
+    {
+      "text": "🎉 ALL COMPLETE!",
+      "type": "success"
     }
   ],
   "stats": {
