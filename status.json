@@ -74,6 +74,10 @@
     {
       "text": "🟢 Nova + Phoenix at BUILD",
       "type": "warning"
+    },
+    {
+      "text": "✓ Build complete!",
+      "type": "success"
     }
   ],
   "stats": {
