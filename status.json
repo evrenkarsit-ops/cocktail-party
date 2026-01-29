@@ -62,6 +62,10 @@
     {
       "text": "Pipeline initialized: 🎯 Canli Test - 03:57",
       "type": "success"
+    },
+    {
+      "text": "🔵 Atlas started planning",
+      "type": "warning"
     }
   ],
   "stats": {
