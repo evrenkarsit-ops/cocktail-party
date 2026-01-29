@@ -82,6 +82,10 @@
     {
       "text": "🟡 Review + Security at GUARD",
       "type": "warning"
+    },
+    {
+      "text": "✓ Quality gates passed!",
+      "type": "success"
     }
   ],
   "stats": {
