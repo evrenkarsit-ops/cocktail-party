@@ -22,10 +22,10 @@
       "task": null
     },
     "phoenix": {
-      "status": "waiting",
-      "location": "table2",
-      "tokens": 0,
-      "task": "Ready to polish..."
+      "status": "idle",
+      "location": "lounge",
+      "tokens": 15000,
+      "task": null
     },
     "shadow": {
       "status": "idle",
