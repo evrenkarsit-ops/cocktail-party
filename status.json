@@ -46,10 +46,10 @@
       "task": "Running tests..."
     },
     "scribe": {
-      "status": "idle",
-      "location": "entrance",
+      "status": "active",
+      "location": "table4",
       "tokens": 0,
-      "task": null
+      "task": "Writing docs..."
     }
   },
   "logs": [
