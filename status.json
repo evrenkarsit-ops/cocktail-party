@@ -70,6 +70,10 @@
     {
       "text": "✓ Atlas: Planning complete!",
       "type": "success"
+    },
+    {
+      "text": "🟢 Nova + Phoenix at BUILD",
+      "type": "warning"
     }
   ],
   "stats": {
