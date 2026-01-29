@@ -86,6 +86,10 @@
     {
       "text": "✓ Quality gates passed!",
       "type": "success"
+    },
+    {
+      "text": "🟣 Verification at VERIFY",
+      "type": "warning"
     }
   ],
   "stats": {
