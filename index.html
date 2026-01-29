@@ -1025,7 +1025,7 @@
                 }
                 
             } catch (e) {
-                // Silent fail - will retry
+                console.error('Poll error:', e);
             }
         }
         
@@ -1036,8 +1036,10 @@
         initAgents();
         addLog('System initialized');
         addLog('8 agents ready at the bar');
-        addConsole('Polling live status from GitHub...', 'success');
-        pollStatus(); // Initial poll
+        addConsole('Connecting to live status...', 'success');
+        // Initial poll
+        pollStatus();
+        console.log('Cocktail Party initialized, polling every 2s');
     </script>
 </body>
 </html>
